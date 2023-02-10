@@ -1,0 +1,8 @@
+version: "3"
+
+services:
+  app:
+    image: hlhr202/chatgpt:latest
+    env_file: ./.env.local
+    ports:
+      - 3000:3000
