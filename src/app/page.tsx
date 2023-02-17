@@ -178,7 +178,7 @@ export default function Home() {
           onInput={(evt) => setMessage(evt.currentTarget.innerText ?? '')}
         />
 
-        <button className="btn btn-active btn-accent md:w-24" disabled={lock}>
+        <button onClick={handleSend} className="btn btn-active btn-accent md:w-24" disabled={lock}>
           发送
         </button>
         <button onClick={clearHistory} className="btn btn-error md:w-24 hidden sm:block">
