@@ -175,7 +175,7 @@ export default function Home() {
           className="input input-bordered flex-1"
           suppressContentEditableWarning
           ref={editableRef}
-          onInput={(evt) => setMessage(evt.currentTarget.innerText ?? '')}
+          onInput={(evt) => setMessage(evt.target.value ?? '')}
         />
 
         <button onClick={handleSend} className="btn btn-active btn-accent md:w-24" disabled={lock}>
