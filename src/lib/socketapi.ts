@@ -3,6 +3,7 @@ import { io } from "socket.io-client";
 import { MessageResponse } from "@/interface/response";
 import { ChatMessage } from "chatgpt";
 import { useMap } from "react-use";
+import { createMessages } from "@/mock/message";
 
 const useSocket = () => {
     const [ready, setReady] = useState(false);
@@ -34,7 +35,7 @@ export const useSocketApi = () => {
 
     const [messagesMap, { set, reset }] = useMap<
         Record<string, MessageResponse<ChatMessage>>
-    >({});
+    >(createMessages());
 
     const send = (payload: {
         parentMessageId?: string;

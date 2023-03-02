@@ -2,13 +2,19 @@
 import { MessageResponse } from "@/interface/response";
 import { useSocketApi } from "@/lib/socketapi";
 import { ChatMessage } from "chatgpt";
-import { useRef, useState, useEffect, useCallback } from "react";
+import {
+    useRef,
+    useState,
+    useEffect,
+    useCallback,
+    useLayoutEffect,
+} from "react";
 import ReactMarkdown from "react-markdown";
 import setupIndexedDB, { useIndexedDBStore } from "use-indexeddb";
-import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { PrismAsyncLight as SyntaxHighlighter } from "react-syntax-highlighter";
+import { materialDark as dark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import javascript from "react-syntax-highlighter/dist/esm/languages/prism/typescript";
 
 const dbConfig = {
     databaseName: "chatgpt",
@@ -117,6 +123,15 @@ export default function Home() {
         initFromDb();
     }, []);
 
+    useLayoutEffect(() => {
+        SyntaxHighlighter.registerLanguage("javascript", javascript);
+        SyntaxHighlighter.registerLanguage("typescript", javascript);
+        SyntaxHighlighter.registerLanguage("ts", javascript);
+        SyntaxHighlighter.registerLanguage("tsx", javascript);
+        SyntaxHighlighter.registerLanguage("js", javascript);
+        SyntaxHighlighter.registerLanguage("jsx", javascript);
+    }, []);
+
     return (
         <main className="max-h-full min-h-full flex flex-col">
             <section className="m-2 flex-1 overflow-hidden flex">
@@ -129,7 +144,7 @@ export default function Home() {
                                 </div>
                                 <ReactMarkdown
                                     className="p-3"
-                                    rehypePlugins={[rehypeHighlight]}
+                                    // rehypePlugins={[rehypeHighlight]}
                                     remarkPlugins={[remarkGfm]}
                                     // eslint-disable-next-line react/no-children-prop
                                     children={message.data.text}
@@ -144,17 +159,20 @@ export default function Home() {
                                             const match = /language-(\w+)/.exec(
                                                 className || ""
                                             );
-                                            return !inline && match ? (
+                                            const returnHighlighted =
+                                                !inline && !!match;
+                                            return returnHighlighted ? (
                                                 <SyntaxHighlighter
-                                                    // eslint-disable-next-line react/no-children-prop
-                                                    children={String(
-                                                        children
-                                                    ).replace(/\n$/, "")}
                                                     style={dark as any}
-                                                    language={match[1]}
+                                                    language="javascript"
                                                     PreTag="div"
                                                     {...props}
-                                                />
+                                                >
+                                                    {String(children).replace(
+                                                        /\n$/,
+                                                        ""
+                                                    )}
+                                                </SyntaxHighlighter>
                                             ) : (
                                                 <code
                                                     className={className}
