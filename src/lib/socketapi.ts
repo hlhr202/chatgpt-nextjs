@@ -35,7 +35,7 @@ export const useSocketApi = () => {
 
     const [messagesMap, { set, reset }] = useMap<
         Record<string, MessageResponse<ChatMessage>>
-    >(createMessages());
+    >({});
 
     const send = (payload: {
         parentMessageId?: string;
