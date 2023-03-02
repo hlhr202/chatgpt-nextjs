@@ -15,13 +15,12 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<MessageResponse<ChatMessage>>
 ) {
-    const { message, conversationId, parentMessageId } = JSON.parse(req.body);
+    const { message, parentMessageId } = JSON.parse(req.body);
 
     res.setHeader("Transfer-Encoding", "chunked");
     res.setHeader("Content-Type", "text/plain");
 
     const response = await api.sendMessage(message, {
-        conversationId,
         parentMessageId,
         stream: true,
         onProgress(partialResponse) {

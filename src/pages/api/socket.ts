@@ -11,9 +11,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
         const io = new Server(server);
         io.on("connection", (socket) => {
             socket.on("message", async (payload) => {
-                const { message, conversationId, parentMessageId } = payload;
+                const { message, parentMessageId } = payload;
                 const response = await api.sendMessage(message, {
-                    conversationId,
                     parentMessageId,
                     onProgress(partialResponse) {
                         const returnMessage = {
