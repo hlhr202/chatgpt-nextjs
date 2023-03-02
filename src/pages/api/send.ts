@@ -4,6 +4,7 @@ import { api } from "@/lib/chatgpt";
 import type { ChatMessage } from "chatgpt";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Base64 } from "js-base64";
+// import { openai } from "@/lib/openai";
 
 export const config = {
     runtime: "nodejs",
@@ -19,6 +20,11 @@ export default async function handler(
 
     res.setHeader("Transfer-Encoding", "chunked");
     res.setHeader("Content-Type", "text/plain");
+
+    // openai.createChatCompletion({
+    //     model: "gpt-3.5-turbo",
+    //     messages: [{ role: "user", content: message }],
+    // });
 
     const response = await api.sendMessage(message, {
         parentMessageId,

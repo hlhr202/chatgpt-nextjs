@@ -2,13 +2,7 @@
 import { MessageResponse } from "@/interface/response";
 import { useSocketApi } from "@/lib/socketapi";
 import { ChatMessage } from "chatgpt";
-import {
-    useRef,
-    useState,
-    useEffect,
-    useCallback,
-    useLayoutEffect,
-} from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import ReactMarkdown from "react-markdown";
 import setupIndexedDB, { useIndexedDBStore } from "use-indexeddb";
 import remarkGfm from "remark-gfm";
@@ -121,9 +115,6 @@ export default function Home() {
 
     useEffect(() => {
         initFromDb();
-    }, []);
-
-    useLayoutEffect(() => {
         SyntaxHighlighter.registerLanguage("javascript", javascript);
         SyntaxHighlighter.registerLanguage("typescript", javascript);
         SyntaxHighlighter.registerLanguage("ts", javascript);
