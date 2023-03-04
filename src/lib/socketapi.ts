@@ -4,19 +4,25 @@ import { MessageResponse } from "@/interface/response";
 import { ChatMessage } from "chatgpt";
 import { useMap } from "react-use";
 import { createMessages } from "@/mock/message";
+import { useRouter } from "next/navigation";
 
 const useSocket = () => {
     const [ready, setReady] = useState(false);
-
+    const router = useRouter();
     const socket = useRef<ReturnType<typeof io>>();
 
     const socketInitializer = async () => {
-        await fetch("/api/socket");
-        socket.current = io();
+        const res = await fetch("/api/socket");
+        const json = await res.json();
+        if (json.code === "SUCCESS") {
+            socket.current = io();
 
-        socket.current.on("connect", () => {
-            setReady(true);
-        });
+            socket.current.on("connect", () => {
+                setReady(true);
+            });
+        } else {
+            router.replace("/");
+        }
     };
 
     useEffect(() => {

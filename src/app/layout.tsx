@@ -1,5 +1,9 @@
 import "./globals.css";
 
+export const metadata = {
+    title: "Chat",
+};
+
 export default function RootLayout({
     children,
 }: {
