@@ -28,7 +28,7 @@ export default function Page() {
         <div className="h-full flex flex-col items-center justify-center">
             <input
                 className="w-9/12 border-[1px] rounded-md m-1 p-2 dark:bg-zinc-700 aria-[disabled=true]:opacity-20 mb-10"
-                placeholder="Password"
+                placeholder="输入密码"
                 onChange={(evt) => setPassword(evt.target.value)}
                 value={password}
             />
