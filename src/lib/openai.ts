@@ -185,6 +185,6 @@ export class ChatGpt {
             parser.feed(new TextDecoder().decode(data));
         });
 
-        return $sub;
+        return $sub.asObservable();
     };
 }
